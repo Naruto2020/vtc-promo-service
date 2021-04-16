@@ -2,10 +2,9 @@
 
 ## Contexte
 
-L'idée est de faire un microservice qui valide ou non des requêtes de promocode.
+L'idée est de faire un service qui valide ou non des requêtes de promocode.
 
-Vous êtes une entreprise de réservation de VTC type Uber et tu souhaites encourager tes clients à réserver
-lorsqu'il fait beau.
+Tu fais partie d'une entreprise de réservation de VTC type Uber et tu souhaites encourager tes clients à réserver lorsqu'il fait beau.
 
 1.  L'équipe marketing peut ajouter des "promocodes" en base dont la **structure sera détaillée en dessous**.
 
@@ -22,11 +21,11 @@ réduction de 20% si :
 
 - l'âge du client est soit
 
-  - de 40 ans (c'est l'âge du patron de l'entreprise !)
+  - de 40 ans
 
   - entre 15 et 35 ans (pour encourager la jeunesse)
 
-- la date de la demande du code est
+- la date de la demande de réduction est
 
   - après le 1er janvier 2019 inclus
 
@@ -38,7 +37,7 @@ réduction de 20% si :
 
   - suffisamment douce, plus de 15°C
 
-// PROMOCODE :
+Ce qui nous donne en JSON :
 
 ```json
 {
@@ -72,8 +71,7 @@ réduction de 20% si :
 }
 ```
 
-Il s'agit d'un exemple, il peut exister des promocodes de bien d'autres forme dans le cadre de cette exercice,
-voici un autre exemple potentiel d'un promocode de ce service :
+Il s'agit d'un exemple, il peut exister des promocodes de bien d'autres formes, voici un autre exemple de promocode :
 
 ```json
 {
@@ -107,12 +105,12 @@ voici un autre exemple potentiel d'un promocode de ce service :
 }
 ```
 
-Qui se lit en : "Pour que le code soit valide, il faut que "l'age soit compris entre 15 et 30" ET ("l'age égale 40" OU "la date est comprise entre 2020 et 2029" OU "la date est après 2099")
+Qui se lit en : "Pour que le code soit valide, il faut que "l'âge soit compris entre 15 et 30" ET ("l'âge égale 40" OU "la date est comprise entre 2020 et 2029" OU "la date est après 2099")
 Il doit aussi pouvoir être validé ou non en fonction des paramètres qu'on va envoyer au service.
 
 Pour qu'une demande de réduction soit acceptée, toutes les règles du promocode demandé doivent être validées (c'est à dire celles dans l'attribut **restrictions**). Dans le promocode ci dessus il s'agirait donc de @date, @meteo et @or. On peut voir ici que certaines règles peuvent en inclure d'autres (comme @or, @and ...) et cela peut aller jusqu'à une profondeur arbitraire.
 
-Exemple d'un message pour faire une demande de réduction :
+Pour demander une réduction, on doit fournir le nom du promocode souhaité, notre âge et la ville où l'on se trouve. Exemple :
 
 // DEMANDE DE RÉDUCTION :
 
@@ -148,15 +146,15 @@ Exemple d'un message pour faire une demande de réduction :
 }
 ```
 
-_Pour la structure des données, le format est donné en exemple mais n'hésite pas à faire une autre proposition si tu la juges plus pertinente. Les spécifications sont minimales, pour laisser au candidat la liberté de rajouter les choses qu'ils trouvent nécessaires ou utiles aux routes comme les erreurs, le format des réponses, règles supplémentaires etc..._
+_Pour la structure des données, le format est donné en exemple mais n'hésite pas à faire une autre proposition si tu la juges plus pertinente. Les spécifications sont minimales, pour laisser au candidat la liberté de rajouter les choses qu'il trouve nécessaires ou utiles aux routes comme les erreurs, le format des réponses, règles supplémentaires etc..._
 
-_Tu peux aussi changer les clés des rules : lt, bt, before, after etc... si tu le souhaites dans quelquechose qui est plus pratique pour toi_
+_Tu peux aussi changer les clés des rules : lt, bt, before, after etc... si tu le souhaites dans quelque chose qui est plus pratique pour toi_
 
 ## Consignes
 
 Pour orienter le dévelopement, 3 tests d'intégration sont déjà écrits. Un maximum de ces tests doit réussir. Il est entièrement possible de modifier les tests et d'en rajouter. Tout peut être modifié dans le code fourni :)
 
-## Execution des tests
+## Exécution des tests
 
 ```sh
 npm install
@@ -177,7 +175,7 @@ Pour la météo, possibilité d'utiliser openWeatherMap avec l'API key suivante 
 
 https://openweathermap.org/ (doc sur le site, API KEY: d0562f476913da692a065c608d0539f6 (60 calls/min))
 
-Penses bien à l'architecture des dossiers/fichiers. Respectes les bonnes pratiques.
+Pense bien à l'architecture des dossiers/fichiers. Respecte les bonnes pratiques.
 
 **⚠️ Pour l'algo n'oublie pas que la profondeur des restrictions est arbitraire et sans limite.**
 

@@ -19,7 +19,7 @@ describe("promocode validation application", () => {
       },
     };
 
-    const received = await app(redeemInfo, promoCode);
+    const received = await askReduction(redeemInfo, promoCode);
 
     expect(received).toEqual({
       avantage: { percent: 25 },
@@ -67,7 +67,7 @@ describe("promocode validation application", () => {
       },
     };
 
-    const received = await app(redeemInfo, promoCode);
+    const received = await askReduction(redeemInfo, promoCode);
 
     expect(received).toEqual({
       avantage: { percent: 20 },
@@ -94,7 +94,7 @@ describe("promocode validation application", () => {
       },
     };
 
-    const received = await app(redeemInfo, promoCode);
+    const received = await askReduction(redeemInfo, promoCode);
 
     expect(received).toEqual({
       promocode_name: "WeatherCodeInvalid",
