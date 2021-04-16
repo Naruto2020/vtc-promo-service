@@ -1,7 +1,3 @@
-# Ce document sur github
-
-https://docs.google.com/document/d/1PKxyWWsGL9_dgoPq5j3f_tS7KOqG6hMzDo_bmlPqKcQ/edit
-
 # Consignes du Test technique
 
 ## Contexte
