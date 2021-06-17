@@ -1,4 +1,4 @@
-const app = require("../src/index");
+const askReduction = require("../src/index");
 
 describe("promocode validation application", () => {
   it("should return acceptance of a simple promo code", async () => {
