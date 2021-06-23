@@ -152,7 +152,7 @@ _Tu peux aussi changer les clés des rules : lt, bt, before, after etc... si tu 
 
 ## Consignes
 
-Pour orienter le dévelopement, 3 tests d'intégration sont déjà écrits. Un maximum de ces tests doit réussir. Il est entièrement possible de modifier les tests et d'en rajouter. Tout peut être modifié dans le code fourni :)
+Pour orienter le développement, 3 tests sont déjà écrits. Un maximum de ces tests doit réussir. Il est entièrement possible de modifier les tests et d'en rajouter. Tout peut être modifié dans le code fourni :)
 
 ## Exécution des tests
 
