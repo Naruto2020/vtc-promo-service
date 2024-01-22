@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 // connct to MongoDB data base
 MONGODB_URI = process.env.myDbUrl
 
-
 mongoose.connect(
     MONGODB_URI , 
 );  

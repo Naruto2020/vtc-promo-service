@@ -15,23 +15,23 @@ const options = {
         lon: town.lon,
         lat: town.lat
     }
+
     const apiUrl = process.env.WeatherUrl;
     return new Promise((resolve, reject) => {
         let meteoTemp = "";
         let meteoDescription = "";
 
-        fetch(apiUrl + `${city.lat}&${city.lon}&units=metric&exclude=hourly,daily&appid=${token}`, options)
+        fetch(apiUrl + `lat=${city.lat}&lon=${city.lon}&units=metric&appid=${token}`, options)
             .then(response => {
                 return response.json();
             })
             .then(data => {
                 console.log("DATA ---> : ", data);
-                const currentWeather = data.current;
+                const currentWeather = data.weather;
 
                 if (currentWeather) {
-                    meteoTemp = currentWeather.temp || "";
-                    const weatherDescription = currentWeather.weather;
-                    meteoDescription = weatherDescription ? weatherDescription[0].description : "";
+                    meteoTemp = data.main.temp || "";
+                    meteoDescription = currentWeather ? currentWeather[0].description : "";
                     resolve({ meteoTemp, meteoDescription });
                 } else {
                     reject(new Error("Données météo actuelles non disponibles ."));
