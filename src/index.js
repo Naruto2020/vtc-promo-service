@@ -1,3 +1,7 @@
-module.exports = askReduction;
+const app = require("./app");
 
-async function askReduction(askReductionInput, promoCode) {}
+// server
+app.listen(process.env.PORT || 4000, ()=>{
+    console.log(`ecoute sur le port ${process.env.PORT || 4000}`);
+});
+

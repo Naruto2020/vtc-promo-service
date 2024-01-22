@@ -42,6 +42,7 @@ Ce qui nous donne en JSON :
 ```json
 {
   "name": "WeatherCode",
+  "isActive": true,
   "avantage": { "percent": 20 },
   "restrictions": {
     "@or": [
@@ -77,6 +78,7 @@ Il s'agit d'un exemple, il peut exister des promocodes de bien d'autres formes, 
 {
   "_id": "...",
   "name": "WeatherCodeBis",
+  "isActive": true,
   "avantage": { "percent": 30 },
   "restrictions": {
     "@or": [
