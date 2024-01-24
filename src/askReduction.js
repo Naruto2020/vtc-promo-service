@@ -144,7 +144,7 @@ let checkAge = async (askReductionInput, key, condition, promoCode) => {
             status: "accepted"
         };
     }
-    if (ageCondition.lt && couponArgument.age <= ageCondition.lt || ageCondition.gt && couponArgument.age >= ageCondition.gt) {
+    if (ageCondition.lt && couponArgument.age >= ageCondition.lt || ageCondition.gt && couponArgument.age <= ageCondition.gt) {
         //custom return if not valid "lt" and "gt" conditions
         return {
             promocode_name: askReductionInput.promocode_name,
@@ -204,6 +204,17 @@ let checkMeteoRestriction = async (askReductionInput, key, condition, promoCode)
     const couponMeteoDescription = getMeteoData.meteoDescription;
     const promoMeteoTemp = meteoCondition.temp;
     const promoMeteoDescription = meteoCondition.is;
+
+    // if (
+    //     !(
+    //       promoMeteoDescription && 
+    //       couponMeteoDescription === promoMeteoDescription &&
+    //       (
+    //         (promoMeteoTemp.lt && couponMeteoTemp < promoMeteoTemp.lt) ||
+    //         (promoMeteoTemp.gt && couponMeteoTemp >= promoMeteoTemp.gt)
+    //       )
+    //     )
+    // )
     if(!(promoMeteoDescription && couponMeteoDescription === promoMeteoDescription && promoMeteoTemp.gt && couponMeteoTemp >= promoMeteoTemp.gt)) {
         return {
             promocode_name: askReductionInput.promocode_name,
