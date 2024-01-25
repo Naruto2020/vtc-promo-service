@@ -153,10 +153,7 @@ let checkAndRestrictions = async (askReductionInput, promoCode) => {
 
     const meteoRestriction = promoCode.restrictions["@meteo"];
     if (meteoRestriction) {
-        const meteoCheckResult = await checkMeteoRestriction(askReductionInput, promoCode);
-        if (meteoCheckResult.status === "denied") {
-            return meteoCheckResult;
-        }
+        return await checkMeteoRestriction(askReductionInput, promoCode);
     }
 
     // if all "AND" conditions are valid 
