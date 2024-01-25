@@ -10,26 +10,18 @@ module.exports = askReduction;
  */
 
 async function askReduction(askReductionInput, promoCode) {
-    if (promoCode.isActive) {
+
+    if(promoCode.isActive) {
         const orRestrictionLogic = promoCode.restrictions["@or"];
-        const couponArgument = askReductionInput.arguments;
-        
-        if (orRestrictionLogic && orRestrictionLogic.length != 0) {
-            const combinedResult = await checkCombinedRestrictions(askReductionInput, promoCode);
-            if (combinedResult.status === "accepted") {
-                return combinedResult;
-            }else{
-                return combinedResult;
-            }
-        } else {
-            const andResult = await checkAndRestrictions(askReductionInput, promoCode);
-            if (andResult.status === "accepted") {
-                return andResult;
-            }else{
-                return andResult;
-            }
+
+        if(orRestrictionLogic && orRestrictionLogic.length != 0) {
+            return  await checkCombinedRestrictions(askReductionInput, promoCode);
+        }else{
+           return await checkAndRestrictions(askReductionInput, promoCode);
         }
+
     }
+
     return {
         promocode_name: promoCode.name,
         reasons: {},
@@ -37,11 +29,66 @@ async function askReduction(askReductionInput, promoCode) {
     };
 }
 
+// use for...of to loop array 
+
+// let checkCombinedRestrictions = async (askReductionInput, promoCode) => {
+//     const couponArgument = askReductionInput.arguments;
+//     const orRestrictionLogic = promoCode.restrictions["@or"];
+
+//     for (const orCondition of orRestrictionLogic) {
+//         let isAllConditionsMet = true;
+
+//         for (const key in orCondition) {
+//             if (key === "@age") {
+//                 const ageCheckResult = await checkAge(askReductionInput, key, orCondition, promoCode);
+//                 if (!ageCheckResult) {
+//                     isAllConditionsMet = false;
+//                     break;
+//                 }
+//             } else if (key === "@date") {
+//                 const dateCheckResult = await checkDate(askReductionInput, key, orCondition, promoCode);
+//                 if (!dateCheckResult) {
+//                     isAllConditionsMet = false;
+//                     break;
+//                 }
+//             } else if (key === "@meteo") {
+//                 const meteoCheckResult = await checkMeteoRestriction(askReductionInput,  key, orCondition, promoCode);
+//                 if (meteoCheckResult.status === "denied") {
+//                     isAllConditionsMet = false;
+//                     break;
+//                 }
+//             } else {
+//                 return {
+//                     promocode_name: askReductionInput.promocode_name,
+//                     reasons: { undefined: "not supported condition" },
+//                     status: "denied"
+//                 };
+//             }
+//         }
+
+//         if (isAllConditionsMet) {
+//             return {
+//                 avantage: promoCode.avantage,
+//                 promocode_name: askReductionInput.promocode_name,
+//                 status: "accepted"
+//             };
+//         }
+//     }
+
+//     return {
+//         promocode_name: askReductionInput.promocode_name,
+//         reasons: { orConditions: "notValid" },
+//         status: "denied"
+//     };
+// };
+
+
+// use javascript native function call some to loop on array 
+
 let checkCombinedRestrictions = async (askReductionInput, promoCode) => {
-    const couponArgument = askReductionInput.arguments;
     const orRestrictionLogic = promoCode.restrictions["@or"];
 
-    for (const orCondition of orRestrictionLogic) {
+    const isAnyConditionMet = orRestrictionLogic.some(async (orCondition) => {
         let isAllConditionsMet = true;
 
         for (const key in orCondition) {
@@ -58,7 +105,7 @@ let checkCombinedRestrictions = async (askReductionInput, promoCode) => {
                     break;
                 }
             } else if (key === "@meteo") {
-                const meteoCheckResult = await checkMeteoRestriction(askReductionInput,  key, orCondition, promoCode);
+                const meteoCheckResult = await checkMeteoRestriction(askReductionInput, key, orCondition, promoCode);
                 if (meteoCheckResult.status === "denied") {
                     isAllConditionsMet = false;
                     break;
@@ -72,25 +119,27 @@ let checkCombinedRestrictions = async (askReductionInput, promoCode) => {
             }
         }
 
-        if (isAllConditionsMet) {
-            return {
-                avantage: promoCode.avantage,
-                promocode_name: askReductionInput.promocode_name,
-                status: "accepted"
-            };
-        }
-    }
+        return isAllConditionsMet;
+    });
 
-    return {
-        promocode_name: askReductionInput.promocode_name,
-        reasons: { orConditions: "notValid" },
-        status: "denied"
-    };
+    if (isAnyConditionMet) {
+        return {
+            avantage: promoCode.avantage,
+            promocode_name: askReductionInput.promocode_name,
+            status: "accepted"
+        };
+    } else {
+        return {
+            promocode_name: askReductionInput.promocode_name,
+            reasons: { orConditions: "notValid" },
+            status: "denied"
+        };
+    }
 };
+
 
 // check @age, @date and @meteo field out of "OR" logic 
 let checkAndRestrictions = async (askReductionInput, promoCode) => {
-    const couponArgument = askReductionInput.arguments;
 
     const ageRestriction = promoCode.restrictions["@age"];
     if (ageRestriction) {
