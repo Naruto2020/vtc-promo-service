@@ -143,19 +143,12 @@ let checkAndRestrictions = async (askReductionInput, promoCode) => {
 
     const ageRestriction = promoCode.restrictions["@age"];
     if (ageRestriction) {
-        const ageCheckResult = await checkAge(askReductionInput, "@age", ageRestriction, promoCode);
-        if (ageCheckResult.status === "denied") {
-            return ageCheckResult;
-        }
+        return await checkAge(askReductionInput, "@age", ageRestriction, promoCode);
     }
 
     const dateRestriction = promoCode.restrictions["@date"];
     if (dateRestriction) {
-        const dateCheckResult = await checkDate(askReductionInput, "@date", dateRestriction, promoCode);
-        
-        if (dateCheckResult.status === "denied") {
-            return dateCheckResult;
-        }
+        return await checkDate(askReductionInput, "@date", dateRestriction, promoCode);
     }
 
     const meteoRestriction = promoCode.restrictions["@meteo"];
