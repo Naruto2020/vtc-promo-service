@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-// connct to MongoDB data base
 MONGODB_URI = process.env.myDbUrl
 
 
+// connct to MongoDB data base
 mongoose.connect(
     MONGODB_URI , 
 );  
