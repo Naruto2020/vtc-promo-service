@@ -9,6 +9,10 @@ module.exports = askReduction;
  * @returns {Object} -  reduction status objects.
  */
 
+function checkResultStatus(orResult, andResult) {
+    return finalResult = orResult.status === andResult.status || orResult.status === 'denied' ? orResult : andResult; 
+}
+
 async function askReduction(askReductionInput, promoCode) {
 
     if(promoCode.isActive) {
@@ -19,7 +23,7 @@ async function askReduction(askReductionInput, promoCode) {
         const andResult = orResult ? await checkAndRestrictions(askReductionInput, promoCode) : {};
 
         if(Object.keys(orResult).length !== 0  && Object.keys(andResult).length !== 0) {
-            return finalResult = orResult.status === andResult.status || orResult.status === 'denied' ? orResult : andResult;    
+            return finalResult = await checkResultStatus(orResult, andResult);   
         }
         return finalResult = Object.keys(orResult).length == 0 && Object.keys(andResult).length !== 0 ? andResult : orResult;
 
