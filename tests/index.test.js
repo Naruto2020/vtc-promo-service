@@ -135,7 +135,7 @@ describe("promocode validation application", () => {
       promocode_name: "WeatherCodeAgeComplex4",
       code: "test27",
       arguments: {
-        age: 16,
+        age: 20,
         meteo: { town: "Lyon" },
       },
     };

@@ -17,7 +17,6 @@ module.exports.promo = async (req, res,) => {
     }
 }
 
-
 module.exports.readPromo = async (req, res) => {
     const  redeemInfo = req.body;
     try{
